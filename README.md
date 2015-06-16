@@ -1,7 +1,12 @@
 # build
 Build system that uses shell scripts to build/run applications written with docker in mind.
 
-It installs this repository
+It looks for commands in the following order:
+   PROJECT/bin
+   ~/.b
+   BUILDDIR/commands (read-only)
+
+The PROJECT folder is the same folder where the ".git" directory is located.
 
 ## Install
     sh <(curl -s https://raw.githubusercontent.com/jsonxr/build/master/install.sh)
