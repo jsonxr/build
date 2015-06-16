@@ -4,8 +4,11 @@
 # Help Description
 #-----------------------------------------------------------------------------
 if [ "$1" == "--help" ]; then
-  echo "Install prerequisites that are not already installed: "
-  echo "        brew, docker, virtualbox, docker-compose, docker-machine."
+  if [ ! "$2" == "--verbose" ]; then
+    echo "Backup the database"
+  else  
+    echo "No verbose help available."
+  fi
   exit
 fi
 
@@ -13,11 +16,4 @@ fi
 #-----------------------------------------------------------------------------
 # Command
 #-----------------------------------------------------------------------------
-
-# Setup environment
-PRE=$(ls $BUILDDIR/commands/setup-*)
-
-# Iterate over each script that looks like "setup-*" and execute it
-for i in ${PRE[@]}; do
-  $i
-done
+echo "Run the db-backup..."

@@ -1,27 +1,57 @@
+#!/bin/bash
+
+#-----------------------------------------------------------------------------
+# Help Description
+#-----------------------------------------------------------------------------
+if [ "$1" == "--help" ]; then
+  echo "b help <cmd> provides verbose help on a specific command."
+  exit
+fi
+
+if [ ! "$1" == "" ]; then
+  if [ -f $BUILDDIR/commands/$1 ]; then
+    $BUILDDIR/commands/$1 --help --verbose
+  elif [ -f $PROJECTDIR/bin/$1 ]; then
+    $PROJECTDIR/bin/$1 --help --verbose
+    echo "Specific help command in project..."
+  elif [ -f $DOTDIR/$1 ]; then
+    $DOTDIR/$1 --help --verbose
+  else
+    echo "Command $1 not found..."
+  fi
+  exit
+fi
+
+
+#-----------------------------------------------------------------------------
+# Command
+#-----------------------------------------------------------------------------
+
 echo "usage: build <command>"
 echo
-echo "general"
-echo "-------"
-echo "help  - See this message."
-echo "setup - Install prerequisites that are not already installed: "
-echo "        brew, docker, virtualbox, docker-compose, docker-machine."
 
-
+OutputHelp () {
+  if [ -d $2 ]; then
+    PRE=$(ls $2)
+    if [ ! "$PRE" = "" ]; then
+      echo "$1"
+      echo "-------"
+      # Iterate over each script that looks like "setup-*" and execute it
+      for i in ${PRE[@]}; do
+        DESCRIPTION=$($2/$i --help)
+        if [ ! "$DESCRIPTION" = "" ]; then
+          echo "$i - $DESCRIPTION"
+        fi
+      done
+      echo ""
+    fi
+  fi
+}
 
 #-----------------------------------------------------------------------------
-# Project
+# Build commands
 #-----------------------------------------------------------------------------
-echo ""
-echo "project"
-echo "-------"
-PRE=$(ls $PROJECTDIR/bin)
+OutputHelp "general" $BUILDDIR/commands
+OutputHelp "~/.b" $DOTDIR
+OutputHelp "project" $PROJECTDIR/bin
 
-# Iterate over each script that looks like "setup-*" and execute it
-for i in ${PRE[@]}; do
-  DESCRIPTION=$($PROJECTDIR/bin/$i --help)
-  echo "$i - $DESCRIPTION"
-done
-
-
-
-echo
