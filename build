@@ -1,0 +1,48 @@
+#!/bin/bash
+# This is the parent build script
+# It takes the subcommand and sends it to a script with the same name
+
+#---------------------------------------
+# Save where the build is installed
+#---------------------------------------
+export BUILDDIR=$(dirname $0)
+
+#---------------------------------------
+# Find the project directory looking for
+# the ".git" directory
+#---------------------------------------
+CURRENT=$(pwd)
+while [ ! -d $CURRENT/.git ]; do
+  if [ "$CURRENT" == "/" ]; then
+    break
+  fi
+  CURRENT="$(dirname "$CURRENT")"
+done
+if [ -d $CURRENT/.git ]; then
+  export PROJECTDIR=$CURRENT
+else
+  echo "Don't know where project is because the '.git' folder can not be found."
+  exit 1
+fi
+
+echo $0
+#echo "BUILDDIR: $BUILDDIR"
+#echo "PROJECTDIR: $PROJECTDIR"
+
+# Get the command from the arguments, help is default
+if [ "$1" == "" ]; then
+  CMD='help'
+else
+  CMD=$1
+fi
+
+# Execute the command passed in to the build
+if [ -f $PROJECTDIR/bin/$CMD ]; then
+  $PROJECTDIR/bin/$CMD
+elif [ -f $BUILDDIR/$CMD ]; then
+  $BUILDDIR/$CMD
+else
+  echo "command '$CMD' not found in"
+  echo "    $PROJECTDIR"
+  echo "    $BUILDDIR"
+fi
