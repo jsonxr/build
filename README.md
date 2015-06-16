@@ -1,5 +1,7 @@
 # build
-Build system that uses shell scripts to build/run applications written with docker in mind
+Build system that uses shell scripts to build/run applications written with docker in mind.
+
+It installs this repository
 
 ## Install
     sh <(curl -s https://raw.githubusercontent.com/jsonxr/build/master/install.sh)
@@ -9,4 +11,5 @@ Build system that uses shell scripts to build/run applications written with dock
 
 ## Usage
 
-build <cmd>
+### b setup
+Installs pre-requisites: virtualbox, docker, docker-compose, docker-machine
