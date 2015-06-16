@@ -1,0 +1,10 @@
+echo "usage: build <command>"
+echo
+echo "general"
+echo "-------"
+echo "help  - See this message."
+echo "setup - Install prerequisites that are not already installed: "
+echo "        brew, docker, virtualbox, docker-compose, docker-machine."
+echo
+echo "project"
+echo "-------"

@@ -1,0 +1,17 @@
+DOCKER=$(which docker)
+if [ "$DOCKER" == "" ]; then
+  # mac
+  # https://get.docker.com/builds/Darwin/x86_64/docker-latest
+  #
+  # linux
+  # https://get.docker.com/builds/Linux/x86_64/docker-latest'  
+  echo 
+  echo "installing docker..."
+  echo "----------------------------"
+  DOWNLOAD=https://get.docker.com/builds/`uname -s`/`uname -m`/docker-latest
+  curl -L $DOWNLOAD > /usr/local/bin/docker
+  chmod +x /usr/local/bin/docker
+  DOCKER=$(which docker)
+fi
+
+echo "$DOCKER"

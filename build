@@ -5,7 +5,7 @@
 #---------------------------------------
 # Save where the build is installed
 #---------------------------------------
-export BUILDDIR=$(dirname $0)
+export BUILDDIR=/usr/local/lib/jsonxr-build
 
 #---------------------------------------
 # Find the project directory looking for
@@ -39,8 +39,8 @@ fi
 # Execute the command passed in to the build
 if [ -f $PROJECTDIR/bin/$CMD ]; then
   $PROJECTDIR/bin/$CMD
-elif [ -f $BUILDDIR/$CMD ]; then
-  $BUILDDIR/$CMD
+elif [ -f $BUILDDIR/commands/$CMD ]; then
+  $BUILDDIR/commands/$CMD
 else
   echo "build: command '$CMD' not found in"
   echo "    $PROJECTDIR"

@@ -1,0 +1,19 @@
+DOCKERMACHINE=$(which docker-machine)
+if [ "$DOCKERMACHINE" == "" ]; then
+  # Mac or linux
+  PLATFORM=$(uname)
+  if [ "$PLATFORM" == "Darwin" ]; then
+    DOWNLOAD=docker-machine_darwin-amd64
+  else
+    DOWNLOAD=docker-machine_linux-amd64
+  fi
+
+  echo 
+  echo "installing docker-machine..."
+  echo "----------------------------"
+  curl -L https://github.com/docker/machine/releases/download/v0.2.0/$DOWNLOAD > /usr/local/bin/docker-machine
+  chmod +x /usr/local/bin/docker-machine
+  DOCKERMACHINE=$(which docker-machine)
+fi
+
+echo "$DOCKERMACHINE"

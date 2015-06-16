@@ -1,0 +1,7 @@
+# Setup environment
+PRE=$(ls $BUILDDIR/setup-*)
+
+# Iterate over each script that looks like "setup-*" and execute it
+for i in ${PRE[@]}; do
+  $i
+done

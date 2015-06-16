@@ -1,0 +1,23 @@
+VIRTUALBOX=$(which virtualbox)
+if [ "$VIRTUALBOX" == "" ]; then
+  # mac
+  # https://get.docker.com/builds/Darwin/x86_64/docker-latest
+  #
+  # linux
+  # https://get.docker.com/builds/Linux/x86_64/docker-latest'  
+  echo 
+  echo "installing virtualbox..."
+  echo "----------------------------"
+   DOWNLOAD=http://download.virtualbox.org/virtualbox/4.3.28/VirtualBox-4.3.28-100309-OSX.dmg
+  curl -L $DOWNLOAD > ~/Downloads/VirtualBox.dmg
+  # Mount the dmg
+  hdiutil mount ~/Downloads/VirtualBox.dmg
+  # Run the package and install on /
+  sudo installer -package /Volumes/VirtualBox/VirtualBox.pkg -target / 
+  # Eject the dmg
+  hdiutil unmount "/Volumes/VirtualBox/"
+  
+  VIRTUALBOX=$(which virtualbox)   
+fi
+
+echo "$VIRTUALBOX"
