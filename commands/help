@@ -8,14 +8,14 @@ if [ "$1" == "--help" ]; then
   exit
 fi
 
+# execute help in the following order:  project, dotdir, the commands dir
 if [ ! "$1" == "" ]; then
-  if [ -f $BUILDDIR/commands/$1 ]; then
-    $BUILDDIR/commands/$1 --help --verbose
-  elif [ -f $PROJECTDIR/bin/$1 ]; then
+  if [ -f $PROJECTDIR/bin/$1 ]; then
     $PROJECTDIR/bin/$1 --help --verbose
-    echo "Specific help command in project..."
   elif [ -f $DOTDIR/$1 ]; then
     $DOTDIR/$1 --help --verbose
+  elif [ -f $BUILDDIR/commands/$1 ]; then
+    $BUILDDIR/commands/$1 --help --verbose
   else
     echo "Command $1 not found..."
   fi
@@ -38,9 +38,13 @@ OutputHelp () {
       echo "-------"
       # Iterate over each script that looks like "setup-*" and execute it
       for i in ${PRE[@]}; do
-        DESCRIPTION=$($2/$i --help)
-        if [ ! "$DESCRIPTION" = "" ]; then
-          echo "$i - $DESCRIPTION"
+        # Make sure this is a file, not the examples directory
+        if [ -f $2/$i ]; then
+          # Get the help description to display, if none returned, it won't show up in the help
+          DESCRIPTION=$($2/$i --help)
+          if [ ! "$DESCRIPTION" = "" ]; then
+            echo "$i - $DESCRIPTION"
+          fi
         fi
       done
       echo ""

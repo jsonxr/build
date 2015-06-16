@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#-----------------------------------------------------------------------------
+# Help Description
+#-----------------------------------------------------------------------------
+HELP_DESCRIPTION="No help available."
+HELP_VERBOSE="No verbose help is available."
+
+if [ "$1" == "--help" ]; then
+  if [ "$2" == "--verbose" ]; then
+    echo $HELP_VERBOSE
+  else  
+    echo $HELP_DESCRIPTION
+  fi
+  exit
+fi
+
+
+#-----------------------------------------------------------------------------
+# Command
+#-----------------------------------------------------------------------------
+echo "Run the command!!!!"

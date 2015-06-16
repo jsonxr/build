@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#-----------------------------------------------------------------------------
+# Help Description
+#-----------------------------------------------------------------------------
+if [ "$1" == "--help" ]; then
+  if [ ! "$2" == "--verbose" ]; then
+    echo "Create a node build command"
+  else  
+    echo "No verbose help available."
+  fi
+  exit
+fi
+
+
+#-----------------------------------------------------------------------------
+# Command
+#-----------------------------------------------------------------------------
+
+# Make sure they supplied a name for the command
+if [ "$1" = "" ]; then
+  echo "Error: Must supply the name of the command"
+  exit 1
+fi
+
+# If the command already exists, exit with an error
+if [ -e $PROJECTDIR/bin/$1 ]; then
+  echo "Error: $PROJECTDIR/bin/$1 already exists."
+  exit 1
+fi
+
+# Create the bin directory if it doesn't exist
+if [ ! -d $PROJECTDIR/bin ]; then
+  mkdir $PROJECTDIR/bin
+fi
+
+# Copy the example to the new name
+cp $BUILDDIR/commands/examples/node $PROJECTDIR/bin/$1
+chmod +x $PROJECTDIR/bin/$1

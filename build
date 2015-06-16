@@ -12,8 +12,6 @@ export DOTDIR=~/.b
 # Find the project directory looking for
 # the ".git" directory
 #---------------------------------------
-
-
 CURRENT=$(pwd)
 while [ ! -d $CURRENT/.git ]; do
   if [ "$CURRENT" == "/" ]; then
@@ -28,36 +26,29 @@ else
   exit 1
 fi
 
-#echo $0
-# echo "BUILDDIR: $BUILDDIR"
-# echo "PROJECTDIR: $PROJECTDIR"
-# echo "DOTDIR: $DOTDIR"
-
+#---------------------------------------
 # Get the command from the arguments, help is default
+#---------------------------------------
 if [ "$1" == "" ]; then
   CMD='help'
 else
   CMD=$1
 fi
 
-if [ "$CMD" == "help" ]; then
-  $BUILDDIR/commands/help $2 $3 $4 $5 $6 $7 $8 $9
+
+#---------------------------------------
+# execute cmd in the following order:  project, dotdir, the commands dir
+#---------------------------------------
+if [ -f $PROJECTDIR/bin/$CMD ]; then
+  $PROJECTDIR/bin/$CMD $2 $3 $4 $5 $6 $7 $8 $9
+elif [ -f $DOTDIR/$CMD ]; then
+  $DOTDIR/$CMD $2 $3 $4 $5 $6 $7 $8 $9
+elif [ -f $BUILDDIR/commands/$CMD ]; then
+  $BUILDDIR/commands/$CMD $2 $3 $4 $5 $6 $7 $8 $9
 else
-  # Execute the command passed in to the build
-  if [ -f $PROJECTDIR/bin/$CMD ]; then
-    $PROJECTDIR/bin/$CMD $2 $3 $4 $5 $6 $7 $8 $9
-  elif [ -f $DOTDIR/$CMD ]; then
-    $DOTDIR/$CMD $2 $3 $4 $5 $6 $7 $8 $9
-  elif [ -f $BUILDDIR/commands/$CMD ]; then
-    $BUILDDIR/commands/$CMD $2 $3 $4 $5 $6 $7 $8 $9
-  else
-    echo "build: command '$CMD' not found in"
-    echo "    $PROJECTDIR"
-    echo "    $BUILDDIR"
-    echo "    $DOTDIR"
-  fi
-
+  echo "build: command '$CMD' not found in"
+  echo "    $PROJECTDIR"
+  echo "    $DOTDIR"
+  echo "    $BUILDDIR"
 fi
-
-
 
