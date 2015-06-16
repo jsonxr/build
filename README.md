@@ -11,5 +11,18 @@ It installs this repository
 
 ## Usage
 
+### b help
+List of commands available
+
 ### b setup
 Installs pre-requisites: virtualbox, docker, docker-compose, docker-machine
+
+### b upgrade
+Upgrades the build system to the latest (dangerous)
+
+
+### b cmd-bash
+Create an example script in your projects bin directory using bash as the scripting tool.
+
+### b cmd-node
+Create an example script in your projects bin directory using node as the scripting tool.
