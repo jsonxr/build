@@ -5,6 +5,23 @@ echo "-------"
 echo "help  - See this message."
 echo "setup - Install prerequisites that are not already installed: "
 echo "        brew, docker, virtualbox, docker-compose, docker-machine."
-echo
+
+
+
+#-----------------------------------------------------------------------------
+# Project
+#-----------------------------------------------------------------------------
+echo ""
 echo "project"
 echo "-------"
+PRE=$(ls $PROJECTDIR/bin)
+
+# Iterate over each script that looks like "setup-*" and execute it
+for i in ${PRE[@]}; do
+  DESCRIPTION=$($PROJECTDIR/bin/$i --help)
+  echo "$i - $DESCRIPTION"
+done
+
+
+
+echo

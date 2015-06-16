@@ -6,11 +6,14 @@
 # Save where the build is installed
 #---------------------------------------
 export BUILDDIR=/usr/local/lib/jsonxr-build
+export DOTDIR=~/.b
 
 #---------------------------------------
 # Find the project directory looking for
 # the ".git" directory
 #---------------------------------------
+
+
 CURRENT=$(pwd)
 while [ ! -d $CURRENT/.git ]; do
   if [ "$CURRENT" == "/" ]; then
@@ -26,8 +29,9 @@ else
 fi
 
 #echo $0
-#echo "BUILDDIR: $BUILDDIR"
-#echo "PROJECTDIR: $PROJECTDIR"
+# echo "BUILDDIR: $BUILDDIR"
+# echo "PROJECTDIR: $PROJECTDIR"
+# echo "DOTDIR: $DOTDIR"
 
 # Get the command from the arguments, help is default
 if [ "$1" == "" ]; then
@@ -36,13 +40,24 @@ else
   CMD=$1
 fi
 
-# Execute the command passed in to the build
-if [ -f $PROJECTDIR/bin/$CMD ]; then
-  $PROJECTDIR/bin/$CMD
-elif [ -f $BUILDDIR/commands/$CMD ]; then
-  $BUILDDIR/commands/$CMD
+if [ "$CMD" == "help" ]; then
+  $BUILDDIR/commands/help
 else
-  echo "build: command '$CMD' not found in"
-  echo "    $PROJECTDIR"
-  echo "    $BUILDDIR"
+  # Execute the command passed in to the build
+  if [ -f $PROJECTDIR/bin/$CMD ]; then
+    $PROJECTDIR/bin/$CMD
+  elif [ -f $DOTDIR ]; then
+    $DOTDIR/$CMD
+  elif [ -f $BUILDDIR/commands/$CMD ]; then
+    $BUILDDIR/commands/$CMD
+  else
+    echo "build: command '$CMD' not found in"
+    echo "    $PROJECTDIR"
+    echo "    $BUILDDIR"
+    echo "    $DOTDIR"
+  fi
+
 fi
+
+
+
