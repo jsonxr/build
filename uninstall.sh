@@ -1,4 +1,4 @@
 #!/bin/bash
 
-rm /usr/local/bin/build
+rm /usr/local/bin/b
 rm -rf /usr/local/lib/jsonxr-build

@@ -42,7 +42,7 @@ if [ -f $PROJECTDIR/bin/$CMD ]; then
 elif [ -f $BUILDDIR/$CMD ]; then
   $BUILDDIR/$CMD
 else
-  echo "command '$CMD' not found in"
+  echo "build: command '$CMD' not found in"
   echo "    $PROJECTDIR"
   echo "    $BUILDDIR"
 fi
